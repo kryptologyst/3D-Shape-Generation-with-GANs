@@ -1,0 +1,64 @@
+# Default configuration for 3D Shape Generation
+
+# Model configuration
+model:
+  type: "point_cloud"  # Options: point_cloud, improved_point_cloud, voxel
+  latent_dim: 128
+  num_points: 2048
+  voxel_size: 64
+  hidden_dims: [512, 1024, 2048]
+  use_batchnorm: true
+  dropout: 0.1
+
+# Training configuration
+training:
+  lr_g: 0.0002
+  lr_d: 0.0002
+  beta1: 0.5
+  beta2: 0.999
+  gan_mode: "vanilla"  # Options: vanilla, lsgan, wgangp
+  lambda_gp: 10.0
+  lambda_chamfer: 1.0
+  lambda_emd: 0.1
+  d_steps: 1
+  g_steps: 1
+  num_epochs: 100
+  batch_size: 32
+  save_interval: 1000
+  log_interval: 100
+
+# Data configuration
+data:
+  type: "synthetic"  # Options: synthetic, real
+  num_samples: 1000
+  shape_types: ["sphere", "cube", "cylinder"]
+  normalize: true
+  augment: true
+  num_workers: 4
+  pin_memory: true
+
+# Paths
+paths:
+  data_dir: "data"
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  assets_dir: "assets"
+
+# Device configuration
+device:
+  type: "auto"  # Options: auto, cuda, mps, cpu
+  mixed_precision: false
+
+# Evaluation configuration
+evaluation:
+  metrics: ["chamfer", "emd", "fid"]
+  num_samples: 1000
+  save_samples: true
+
+# Visualization configuration
+visualization:
+  point_size: 1.0
+  voxel_size: 1.0
+  opacity: 0.8
+  save_plots: true
+  plot_format: "png"  # Options: png, html, pdf
